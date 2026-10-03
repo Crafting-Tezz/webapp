@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        # the pipeline replaces this tag with the git commit id before applying
+        image: motez00/fleetman-webapp:latest
+        # no SPRING_PROFILES_ACTIVE needed: this image's nginx.conf is a plain file,
+        # unlike the old richardchesterwood image that rendered a template from it
